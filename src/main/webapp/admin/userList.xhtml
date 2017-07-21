@@ -1,0 +1,135 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:outputPanel class="row" id="itemList">
+                <div class="col-xs-12">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                    <div class="form-group">
+                        <p:commandButton class="btn btn-primary"
+                                         value="Create"
+                                         icon="fa fa-pencil"
+                                         update="form:itemEditDialog"
+                                         oncomplete="PF('itemEditDialog').show()">
+                            <f:setPropertyActionListener value="#{userDetailController.create()}"
+                                                         target="#{userDetailController.user}"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <p:dataTable var="user" value="#{userListController.userList}"
+                                 tableStyleClass="table table-striped"
+                                 styleClass="table-responsive" id="itemTable">
+                        <p:column headerText="Name" sortBy="#{user.name}" filterBy="#{user.name}"
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{user.name}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <p:commandButton class="btn btn-primary"
+                                             value="Edit"
+                                             icon="fa fa-pencil"
+                                             update="form:itemEditDialog"
+                                             oncomplete="PF('itemEditDialog').show()">
+                                <f:setPropertyActionListener value="#{user}"
+                                                             target="#{userDetailController.user}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <!-- ........................................................................................... -->
+                    <p:dialog header="Weapons"
+                              widgetVar="itemEditDialog" id="itemEditDialog" modal="true" showEffect="fade"
+                              hideEffect="fade" resizable="true">
+                        <p:outputPanel class="container" id="itemDetail"
+                                       rendered="#{not empty userDetailController.user}">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-default ">
+                                        <div class="panel-heading">
+                                            <p:commandButton class="btn btn-primary"
+                                                             value="Save"
+                                                             icon="fa fa-floppy-o"
+                                                             update="form:itemTable"
+                                                             action="#{userDetailController.save()}">
+                                            </p:commandButton>
+                                            <p:commandButton class="btn btn-primary"
+                                                             value="Save and Close"
+                                                             icon="fa fa-floppy-o"
+                                                             update="form:itemTable"
+                                                             action="#{userDetailController.save()}"
+                                                             oncomplete="PF('itemEditDialog').hide()">
+                                            </p:commandButton>
+                                            <p:commandButton class="btn btn-primary"
+                                                             value="Delete"
+                                                             immediate="true"
+                                                             icon="fa fa-trash-o"
+                                                             update="form:itemTable"
+                                                             action="#{userDetailController.delete()}"
+                                                             oncomplete="PF('itemEditDialog').hide()"
+                                                             rendered="#{not userDetailController.user.isNew()}">
+                                            </p:commandButton>
+                                            <p:commandButton class="btn btn-primary"
+                                                             value="Close"
+                                                             icon="fa fa-floppy-o"
+                                                             update="form:itemTable"
+                                                             oncomplete="PF('itemEditDialog').hide()">
+                                            </p:commandButton>
+                                        </div>
+                                        <div class="panel-body form-inline">
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemName" value="Name:"/>
+                                                <div class="input-group">
+                                                    <p:inputText id="itemName" class="form-control"
+                                                                 value="#{userDetailController.user.name}"
+                                                                 required="true" requiredMessage="Name is missing."/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemEmail" value="Email:"/>
+                                                <div class="input-group">
+                                                    <p:inputText id="itemEmail" class="form-control"
+                                                                 value="#{userDetailController.user.email}"
+                                                                 required="true" requiredMessage="Email is missing.">
+
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemFirst" value="Firstname:"/>
+                                                <div class="input-group">
+                                                    <p:inputText id="itemFirst" class="form-control"
+                                                                 value="#{userDetailController.user.firstName}"
+                                                                 required="true"
+                                                                 requiredMessage="Firstname is missing."/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemLast" value="Lastname:"/>
+                                                <div class="input-group">
+                                                    <p:inputText id="itemLast" class="form-control"
+                                                                 value="#{userDetailController.user.lastName}"
+                                                                 required="true"
+                                                                 requiredMessage="Lastname is missing."/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemPhone" value="Phone:"/>
+                                                <div class="input-group">
+                                                    <p:inputText id="itemPhone" class="form-control"
+                                                                 value="#{userDetailController.user.phone}"
+                                                                 required="true" requiredMessage="Phone is missing."/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:dialog>
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>
