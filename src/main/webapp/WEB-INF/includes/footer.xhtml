@@ -6,11 +6,11 @@
 <ui:composition>
     <p class="text-muted">
         <ui:fragment rendered="#{sessionInfoBean.loggedIn}">
-            <span class="fa fa-user"></span> Angemeldet als <i>#{sessionInfoBean.currentUserName}</i>
+            <span class="fa fa-user"/> Angemeldet als <i>#{sessionInfoBean.currentUserName}</i>
             <!--<p>#{sessionInfoBean.currentUserRoles}</p>-->
         </ui:fragment>
         <ui:fragment rendered="#{!sessionInfoBean.loggedIn}">
-            <span class="fa fa-sign-out"></span> Nicht Angemeldet
+            <span class="fa fa-sign-out"/> Nicht angemeldet
         </ui:fragment>
     </p>
 </ui:composition>

@@ -1,5 +1,6 @@
 package at.qe.crac.services;
 
+import at.qe.crac.model.Role;
 import at.qe.crac.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -68,6 +69,29 @@ public class UserService extends AbstractService<User> {
         }
 
         return user;
+    }
+
+    public List<Role> getRoleList() {
+        JsonNode response = helperService.request("/role", "get");
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Role> roles = new ArrayList<>();
+
+        if(response == null) {
+            return roles;
+        }
+
+        if (response.path("object").isArray()) {
+            for (final JsonNode node : response.path("object")) {
+                try {
+                    roles.add(mapper.treeToValue(node, Role.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return roles;
     }
 
     public User createUser() {

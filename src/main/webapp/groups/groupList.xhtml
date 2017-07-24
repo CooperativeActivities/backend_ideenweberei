@@ -81,6 +81,9 @@
                                             <div class="form-group">
                                                 <h:outputLabel for="itemName" value="Name:"/>
                                                 <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-users"/>
+                                                    </div>
                                                     <p:inputText id="itemName" class="form-control"
                                                                  value="#{groupDetailController.group.name}"
                                                                  required="true" requiredMessage="Name is missing."/>
@@ -89,6 +92,9 @@
                                             <div class="form-group">
                                                 <h:outputLabel for="itemLimit" value="Limit:"/>
                                                 <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-hashtag"/>
+                                                    </div>
                                                     <p:inputText id="itemLimit" class="form-control"
                                                                  value="#{groupDetailController.group.maxEnrols}"
                                                                  size="4"
@@ -100,6 +106,9 @@
                                             <div class="form-group">
                                                 <h:outputLabel for="itemDesc" value="Beschreibung:"/>
                                                 <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-info"/>
+                                                    </div>
                                                     <p:inputTextarea id="itemDesc" rows="10" cols="40"
                                                                      value="#{groupDetailController.group.description}"
                                                                      required="true"

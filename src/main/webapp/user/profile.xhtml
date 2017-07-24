@@ -25,6 +25,9 @@
                                 <div class="form-group">
                                     <h:outputLabel for="itemEmail" value="Email:"/>
                                     <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-at"/>
+                                        </div>
                                         <p:inputText id="itemEmail" class="form-control"
                                                      value="#{sessionInfoBean.currentUser.email}"
                                                      required="true" requiredMessage="Email is missing.">
@@ -53,9 +56,30 @@
                                 <div class="form-group">
                                     <h:outputLabel for="itemPhone" value="Phone:"/>
                                     <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"/>
+                                        </div>
                                         <p:inputText id="itemPhone" class="form-control"
                                                      value="#{sessionInfoBean.currentUser.phone}"
                                                      required="true" requiredMessage="Phone is missing."/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-key"/>
+                                        </div>
+                                        <p:inputText id="itemPass1" class="form-control" type="password"
+                                                     value="#{userDetailController.password1}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-key"/>
+                                        </div>
+                                        <p:inputText id="itemPass2" class="form-control" type="password"
+                                                     value="#{userDetailController.password2}"/>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,6 @@
 package at.qe.crac.ui.controllers;
 
+import at.qe.crac.model.Role;
 import at.qe.crac.model.User;
 import at.qe.crac.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class UserListController {
     private UserService userService;
 
     private List<User> userList;
+    private List<Role> roleList;
 
     public List<User> getUserList() {
         if(userList == null) {
@@ -29,5 +31,16 @@ public class UserListController {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    public List<Role> getRoleList() {
+        if(roleList == null) {
+            roleList = userService.getRoleList();
+        }
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 }

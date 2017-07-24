@@ -72,6 +72,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         user.setRoles(roles);
+        System.out.println(roles);
 
         if(!passwordEncoder.matches(password, user.getPassword())) {
             return null;
