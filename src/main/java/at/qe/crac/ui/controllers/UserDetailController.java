@@ -37,7 +37,7 @@ public class UserDetailController {
         return userService.createUser();
     }
 
-    public void save() {
+    public void save(User user) {
         //todo: optimize
         if(user.isNew()) {
             for (User test : userListController.getUserList()) {
@@ -48,9 +48,13 @@ public class UserDetailController {
             }
         }
 
-        user = userService.saveUser(user);
+        this.user = userService.saveUser(user);
         userListController.setUserList(null);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User saved."));
+    }
+
+    public void save() {
+        save(user);
     }
 
     public void delete() {

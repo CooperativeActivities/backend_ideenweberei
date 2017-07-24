@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Configuration
 @EnableWebSecurity()
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,15 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/login.xhtml")
+                .antMatchers("/login.xhtml", "/welcome.xhtml", "/error/**")
                 .permitAll()
-                .antMatchers("/welcome.xhtml")
-                .permitAll()
-                .antMatchers("/public/**")
-                .permitAll()
-                .antMatchers("/secure/**")
-                .hasAnyAuthority("USER")
-                .antMatchers("/admin/**")
+                .antMatchers("/groups/**", "/user/**")
                 .hasAnyAuthority("ADMIN")
                 .and()
             .formLogin()

@@ -17,10 +17,10 @@
     <div class="navbar-collapse collapse">
         <ui:fragment rendered="#{sessionInfoBean.hasRole('ADMIN')}">
             <ul class="nav navbar-nav">
-                <li><h:outputLink value="/admin/userList.xhtml">
+                <li><h:outputLink value="/user/userList.xhtml">
                     User
                 </h:outputLink></li>
-                <li><h:outputLink value="/admin/userList.xhtml">
+                <li><h:outputLink value="/groups/groupList.xhtml">
                     Groups
                 </h:outputLink></li>
             </ul>
@@ -36,7 +36,7 @@
                         <span class="caret"/>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><h:outputLink value="/admin/profile.xhtml">
+                        <li><h:outputLink value="/user/profile.xhtml">
                             <span class="fa fa-user"/> Profil
                         </h:outputLink></li>
                         <li><h:outputLink value="/logout">

@@ -32,10 +32,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
+        if(authentication == null) {
+            return null;
+        }
+
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
         JsonNode response = helperService.login(username, password);
+
+        if(response == null) {
+            return null;
+        }
+
         JsonNode meta = response.path("meta");
 
         ObjectMapper mapper = new ObjectMapper();

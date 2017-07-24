@@ -11,6 +11,11 @@
     </servlet>
 
     <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/login.xhtml?denied=true</location>
+    </error-page>
+
+    <error-page>
         <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
         <location>/login.xhtml?denied=true</location>
     </error-page>
@@ -39,27 +44,17 @@
 
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>public/login.xhtml</welcome-file>
+        <welcome-file>/welcome.xhtml</welcome-file>
     </welcome-file-list>
-
-    <filter>
-        <filter-name>
-            UrlRewriteFilter
-        </filter-name>
-        <filter-class>
-            org.tuckey.web.filters.urlrewrite.UrlRewriteFilter
-        </filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
 
     <!-- Include this if you are using Hibernate -->
     <!--

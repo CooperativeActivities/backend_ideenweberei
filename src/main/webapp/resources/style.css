@@ -121,6 +121,11 @@ textarea.ui-inputfield {
     padding: 17px
 }
 
+.ui-dialog .ui-dialog-titlebar-close:hover {
+    padding: 1px;
+    text-decoration: none;
+}
+
 .form-control.ui-selectmanymenu, .form-control.ui-selectonemenu {
     border-radius: 3px !important;
     padding: 0

@@ -31,6 +31,7 @@ public class UserService extends AbstractService<User> {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    // current User
     public User getUser() {
         JsonNode response = helperService.request("/user", "get");
 
@@ -38,7 +39,7 @@ public class UserService extends AbstractService<User> {
         User user = null;
 
         try {
-            user = mapper.treeToValue(response, User.class);
+            user = mapper.treeToValue(response.path("object"), User.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -51,6 +52,11 @@ public class UserService extends AbstractService<User> {
         ObjectMapper mapper = new ObjectMapper();
 
         List<User> user = new ArrayList<>();
+
+        if(response == null) {
+            return user;
+        }
+
         if (response.path("object").isArray()) {
             for (final JsonNode node : response.path("object")) {
                 try {
@@ -66,8 +72,13 @@ public class UserService extends AbstractService<User> {
 
     public User createUser() {
         User user = new User();
+        user.setName("");
+        user.setFirstName("");
+        user.setLastName("");
         String password = passwordEncoder.encode(new Date().toString());
         user.setPassword(password);
+        user.setEmail("");
+        user.setPhone("");
         return user;
     }
 

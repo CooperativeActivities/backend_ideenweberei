@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/main.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:outputPanel class="row" id="itemList">
+                <div class="col-xs-12">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                </div>
+                <div class="col-xs-12">
+                    <p:outputPanel id="itemDetail"
+                                   rendered="#{not empty sessionInfoBean.currentUser}">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">
+                                <p:commandButton class="btn btn-primary"
+                                                 value="Save"
+                                                 icon="fa fa-floppy-o"
+                                                 update="form:itemDetail"
+                                                 action="#{userDetailController.save(sessionInfoBean.currentUser)}">
+                                </p:commandButton>
+                            </div>
+                            <div class="panel-body form-inline">
+                                <div class="form-group">
+                                    <h:outputLabel for="itemEmail" value="Email:"/>
+                                    <div class="input-group">
+                                        <p:inputText id="itemEmail" class="form-control"
+                                                     value="#{sessionInfoBean.currentUser.email}"
+                                                     required="true" requiredMessage="Email is missing.">
+
+                                        </p:inputText>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="itemFirst" value="Firstname:"/>
+                                    <div class="input-group">
+                                        <p:inputText id="itemFirst" class="form-control"
+                                                     value="#{sessionInfoBean.currentUser.firstName}"
+                                                     required="true"
+                                                     requiredMessage="Firstname is missing."/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="itemLast" value="Lastname:"/>
+                                    <div class="input-group">
+                                        <p:inputText id="itemLast" class="form-control"
+                                                     value="#{sessionInfoBean.currentUser.lastName}"
+                                                     required="true"
+                                                     requiredMessage="Lastname is missing."/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="itemPhone" value="Phone:"/>
+                                    <div class="input-group">
+                                        <p:inputText id="itemPhone" class="form-control"
+                                                     value="#{sessionInfoBean.currentUser.phone}"
+                                                     required="true" requiredMessage="Phone is missing."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+                </div>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>
