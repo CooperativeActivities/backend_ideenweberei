@@ -51,12 +51,11 @@ public class GroupDetailController {
 
         group = groupService.saveGroup(group);
         groupListController.setGroupList(null);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User saved."));
     }
 
     public void delete() {
         groupService.deleteGroup(group);
         groupListController.setGroupList(null);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User deleted."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Group deleted."));
     }
 }

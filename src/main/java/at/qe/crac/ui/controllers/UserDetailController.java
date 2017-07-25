@@ -26,7 +26,6 @@ public class UserDetailController {
     private UserListController userListController;
 
     private User user;
-    private List<Role> roleList;
     private String password1;
     private String password2;
 
@@ -36,14 +35,6 @@ public class UserDetailController {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
     }
 
     public String getPassword1() {
@@ -102,7 +93,6 @@ public class UserDetailController {
 
         this.user = userService.saveUser(user);
         userListController.setUserList(null);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User saved."));
     }
 
     public void save() {

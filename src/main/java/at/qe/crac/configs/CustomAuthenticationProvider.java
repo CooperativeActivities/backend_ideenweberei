@@ -60,6 +60,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             return null;
         }
 
+        //todo: correct roles API
         List<Role> roles = new ArrayList<>();
         if (meta.path("roles").isArray()) {
             for (final JsonNode node : meta.path("roles")) {
@@ -72,7 +73,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         user.setRoles(roles);
-        System.out.println(roles);
 
         if(!passwordEncoder.matches(password, user.getPassword())) {
             return null;

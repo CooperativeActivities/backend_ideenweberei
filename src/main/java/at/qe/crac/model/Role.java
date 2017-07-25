@@ -19,6 +19,7 @@ public class Role extends AbstractEntity<Integer>{
 
     public Role(Integer id) {
         this.id = id;
+        this.name = "My name is nobody";
     }
 
     public String getName() {

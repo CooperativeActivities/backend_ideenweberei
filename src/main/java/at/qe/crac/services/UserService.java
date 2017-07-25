@@ -26,6 +26,10 @@ import java.util.Random;
 @Scope("application")
 public class UserService extends AbstractService<User> {
 
+    //beware of circular creation
+    @Autowired
+    private RoleService roleService;
+
     @Autowired
     private HelperService helperService;
 
@@ -35,7 +39,20 @@ public class UserService extends AbstractService<User> {
     // current User
     public User getUser() {
         JsonNode response = helperService.request("/user", "get");
+        ObjectMapper mapper = new ObjectMapper();
+        User user = null;
 
+        try {
+            user = mapper.treeToValue(response.path("object"), User.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public User getUser(int id) {
+        JsonNode response = helperService.request("/user/"+id, "get");
         ObjectMapper mapper = new ObjectMapper();
         User user = null;
 
@@ -51,7 +68,6 @@ public class UserService extends AbstractService<User> {
     public List<User> getUserList() {
         JsonNode response = helperService.request("/user/all", "get");
         ObjectMapper mapper = new ObjectMapper();
-
         List<User> user = new ArrayList<>();
 
         if(response == null) {
@@ -72,26 +88,7 @@ public class UserService extends AbstractService<User> {
     }
 
     public List<Role> getRoleList() {
-        JsonNode response = helperService.request("/role", "get");
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<Role> roles = new ArrayList<>();
-
-        if(response == null) {
-            return roles;
-        }
-
-        if (response.path("object").isArray()) {
-            for (final JsonNode node : response.path("object")) {
-                try {
-                    roles.add(mapper.treeToValue(node, Role.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return roles;
+        return roleService.getRoleList();
     }
 
     public User createUser() {
@@ -103,13 +100,22 @@ public class UserService extends AbstractService<User> {
         user.setPassword(password);
         user.setEmail("");
         user.setPhone("");
+        user.setRoles(new ArrayList<Role>());
         return user;
+    }
+
+    public void deleteUser(User user) {
+        if(!user.getName().equals("frontend")) {
+            helperService.request("/admin/user/"+user.id, "delete");
+        }
     }
 
     //PUT /admin/user/{id}
     //POST /admin/user
     public User saveUser(User user) {
-        //todo: check if new;
+        List<Role> roleList = user.getRoles();
+        roleService.saveRoleList(user, roleList);
+        user.setRoles(null);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(user, JsonNode.class);
 
@@ -126,18 +132,21 @@ public class UserService extends AbstractService<User> {
             response = helperService.request("/admin/user/"+user.getId(), "put", node);
         }
 
+        if(response == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not save User."));
+            return user;
+        }
+
         try {
             user = mapper.treeToValue(response.path("object"), User.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not save User."));
+            return user;
         }
 
+        user.setRoles(roleList);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User saved."));
         return user;
-    }
-
-    public void deleteUser(User user) {
-        if(!user.getName().equals("frontend")) {
-            helperService.request("/admin/user/"+user.id, "delete");
-        }
     }
 }

@@ -27,7 +27,6 @@ public class RoleService extends AbstractService<Role> {
     @Autowired
     private HelperService helperService;
 
-    // current User
     public Role getRole(int id) {
         List<Role> roleList = getRoleList();
         for(Role role : roleList) {
@@ -38,8 +37,9 @@ public class RoleService extends AbstractService<Role> {
         return null;
     }
 
-    private List<Role> getRoleList() {
+    public List<Role> getRoleList() {
         JsonNode response = helperService.request("/role", "get");
+
         ObjectMapper mapper = new ObjectMapper();
 
         List<Role> roles = new ArrayList<>();
@@ -57,8 +57,62 @@ public class RoleService extends AbstractService<Role> {
                 }
             }
         }
-
-        System.out.println(roles);
         return roles;
+    }
+
+    public List<Role> getRoleList(User user) {
+        List<Role> roleList = new ArrayList<>();
+
+        if(user.isNew()) {
+            return roleList;
+        }
+
+        JsonNode response = helperService.request("/user/"+user.id, "get");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        if (response.path("object").path("roles").isArray()) {
+            for (final JsonNode node : response.path("object").path("roles")) {
+                try {
+                    roleList.add(mapper.treeToValue(node, Role.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return roleList;
+    }
+
+    public List<Role> saveRoleList(User user, List<Role> roleList) {
+        List<Role> oldRoles = getRoleList(user);
+        List<Role> newRoles = user.getRoles();
+
+        if(newRoles != null) {
+            for (Role role : newRoles) {
+                if (oldRoles == null || !oldRoles.contains(role)) {
+                    //PUT admin/user/{user_id}/role/{role_id}/add
+                    System.out.println("admin/user/" + user.id + "/role/" + role.id + "/add");
+                    JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "put");
+                    if (response == null) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not add Role."));
+                    }
+                }
+            }
+        }
+
+        if(oldRoles != null) {
+            for (Role role : oldRoles) {
+                if (newRoles == null || !newRoles.contains(role)) {
+                    //DELETE admin/user/{user_id}/role/{role_id}/add
+                    JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "delete");
+                    if (response == null) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not remove Role."));
+                    }
+                }
+            }
+        }
+
+        return newRoles;
     }
 }

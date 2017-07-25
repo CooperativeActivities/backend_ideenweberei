@@ -29,7 +29,7 @@ public class User extends AbstractEntity<Integer> {
     @Column(nullable = false)
     protected String phone;
 
-    @JsonIgnore
+    //@JsonIgnore
     @CollectionTable(name = "user_role")
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     protected List<Role> roles;

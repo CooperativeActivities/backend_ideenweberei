@@ -31,7 +31,7 @@ public class GroupService extends AbstractService<Group> {
     private BCryptPasswordEncoder passwordEncoder;
 
     public List<Group> getGroupList() {
-        JsonNode response = helperService.request("/group/all", "get");
+        JsonNode response = helperService.request("/group", "get");
         ObjectMapper mapper = new ObjectMapper();
 
         List<Group> groups = new ArrayList<>();
@@ -68,25 +68,33 @@ public class GroupService extends AbstractService<Group> {
 
         JsonNode response;
         if(group.isNew()) {
-            response = helperService.request("/admin/group", "post", node);
+            response = helperService.request("/group", "post", node);
             if(response == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not create Group."));
                 return group;
             }
         } else {
-            response = helperService.request("/admin/group/"+group.getId(), "put", node);
+            response = helperService.request("/group/"+group.getId(), "put", node);
+        }
+
+        if(response == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not save Group."));
+            return group;
         }
 
         try {
             group = mapper.treeToValue(response.path("object"), Group.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not save Group."));
+            return group;
         }
 
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Group saved."));
         return group;
     }
 
     public void deleteGroup(Group group) {
-        helperService.request("/admin/group/"+group.id, "delete");
+        helperService.request("/group/"+group.id, "delete");
     }
 }

@@ -133,13 +133,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <p:outputLabel value="Roles:" for="itemRoles"/>
+                                                    <p:outputLabel value="Roles: #{userListController.roleList}" for="itemRoles"/>
                                                     <p:autoComplete id="itemRoles" multiple="true"
-                                                                    value="#{userDetailController.roleList}"
+                                                                    value="#{userDetailController.user.roles}"
                                                                     completeMethod="#{userDetailController.completeRole}"
                                                                     var="role" itemLabel="#{role}"
-                                                                    itemValue="#{role}" forceSelection="true"
-                                                                    required="true" requiredMessage="Roles are missing.">
+                                                                    itemValue="#{role}" forceSelection="true">
                                                         <f:converter binding="#{roleConverter}"/>
                                                         <p:column>
                                                             <h:outputText value="#{role}"/>

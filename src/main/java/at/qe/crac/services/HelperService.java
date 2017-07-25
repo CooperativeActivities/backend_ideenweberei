@@ -50,7 +50,7 @@ public class HelperService {
 
         HttpURLConnection con = connection(path, method, properties);
         if(con == null) {
-            System.out.print("connection");
+            System.out.print("Connection failed");
             return null;
         }
 
@@ -62,6 +62,7 @@ public class HelperService {
             out.flush();
             out.close();
         } catch (IOException e) {
+            System.out.println("Request failed");
             e.printStackTrace();
             return null;
         }
@@ -82,6 +83,7 @@ public class HelperService {
 
             return con;
         } catch (IOException e) {
+            System.out.println("Connection failed");
             e.printStackTrace();
             return null;
         }
@@ -114,6 +116,7 @@ public class HelperService {
                     return null;
             }
         } catch (IOException e) {
+            System.out.println("Unknown error");
             e.printStackTrace();
             return null;
         }
@@ -132,13 +135,13 @@ public class HelperService {
             JsonNode response = mapper.readTree(message.toString());
 
             if(response == null || !response.path("success").asBoolean()) {
-                System.out.print("response");
                 return null;
             }
 
             return response;
 
         } catch (IOException e) {
+            System.out.println("Response failed");
             e.printStackTrace();
             return null;
         }
