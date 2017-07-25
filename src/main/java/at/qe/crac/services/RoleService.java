@@ -92,7 +92,9 @@ public class RoleService extends AbstractService<Role> {
             for (Role role : newRoles) {
                 if (oldRoles == null || !oldRoles.contains(role)) {
                     //PUT admin/user/{user_id}/role/{role_id}/add
-                    System.out.println("admin/user/" + user.id + "/role/" + role.id + "/add");
+                    //todo: check API
+                    System.out.println(role.id);
+
                     JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "put");
                     if (response == null) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not add Role."));
@@ -105,6 +107,9 @@ public class RoleService extends AbstractService<Role> {
             for (Role role : oldRoles) {
                 if (newRoles == null || !newRoles.contains(role)) {
                     //DELETE admin/user/{user_id}/role/{role_id}/add
+                    //todo: check API
+                    System.out.println(role.id);
+
                     JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "delete");
                     if (response == null) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not remove Role."));

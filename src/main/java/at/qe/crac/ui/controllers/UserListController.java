@@ -1,5 +1,6 @@
 package at.qe.crac.ui.controllers;
 
+import at.qe.crac.model.Group;
 import at.qe.crac.model.Role;
 import at.qe.crac.model.User;
 import at.qe.crac.services.UserService;
@@ -20,7 +21,9 @@ public class UserListController {
     private UserService userService;
 
     private List<User> userList;
+    private List<User> selectedUser;
     private List<Role> roleList;
+    private List<Group> groupList;
 
     public List<User> getUserList() {
         if(userList == null) {
@@ -42,5 +45,21 @@ public class UserListController {
 
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
+    }
+
+    public List<User> getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(List<User> selectedUser) {
+        this.selectedUser = selectedUser;
+    }
+
+    public List<Group> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Group> groupList) {
+        this.groupList = groupList;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,7 @@ public class GroupDetailController {
     private GroupListController groupListController;
 
     private Group group;
+    private List<User> userList;
 
     public Group getGroup() {
         return group;
@@ -32,6 +34,27 @@ public class GroupDetailController {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public void add(List<User> userList) {
+        if(userList == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No User selected."));
+            return;
+        }
+        if(group == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No Group selected."));
+            return;
+        }
+
+        groupService.add(group, userList);
     }
 
     public Group create() {

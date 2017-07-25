@@ -92,25 +92,35 @@
                                             <div class="form-group">
                                                 <h:outputLabel for="itemLimit" value="Limit:"/>
                                                 <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-exclamation-triangle"/>
+                                                    </div>
                                                     <p:inputText id="itemLimit" class="form-control"
                                                                  value="#{groupDetailController.group.maxEnrols}"
-                                                                 size="4"
+                                                                 size="6"
                                                                  required="true" requiredMessage="Limit is missing.">
                                                         <f:convertNumber integerOnly="true"/>
                                                     </p:inputText>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="panel-body form-inline">
                                             <div class="form-group">
                                                 <h:outputLabel for="itemDesc" value="Beschreibung:"/>
                                                 <div class="input-group">
-                                                    <p:inputTextarea id="itemDesc" rows="10" cols="40"
+                                                    <p:inputText id="itemDesc" class="form-control"
                                                                      value="#{groupDetailController.group.description}"
-                                                                     required="true"
-                                                                     requiredMessage="Desc is missing."/>
+                                                                     required="true" requiredMessage="Desc is missing."/>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="panel-body form-inline">
+                                            <p:dataTable var="user" value="#{groupDetailController.group.enroledUsers}"
+                                                         tableStyleClass="table table-striped"
+                                                         styleClass="table-responsive" id="userTable">
+                                                <p:column headerText="Name" sortBy="#{user.name}" filterBy="#{user.name}"
+                                                          filterMatchMode="contains">
+                                                    <h:outputText value="#{user.name}"/>
+                                                </p:column>
+                                            </p:dataTable>
                                         </div>
                                     </div>
                                 </div>

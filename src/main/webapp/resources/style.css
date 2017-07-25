@@ -320,3 +320,44 @@ label {
     margin: -15px 15px -15px 0;
     height: 50px;
 }
+
+.ui-icon-check:before {
+    content: "\f00c";
+    font: normal normal normal 12px/1 FontAwesome;
+}
+
+.ui-chkbox .ui-chkbox-box {
+    background: #fff;
+    padding: 3px;
+    width: auto;
+    height: auto;
+    border: 1px solid #ccc;
+    line-height: 1;
+}
+
+.ui-datatable .ui-selection-column .ui-chkbox-all {
+    margin: 0 0 5px 0;
+    width: auto;
+    height: auto;
+}
+
+.ui-chkbox-all .ui-icon-check:before {
+    position: relative;
+    bottom: 2px;
+}
+
+.ui-chkbox-icon.ui-icon {
+    overflow: hidden;
+    width: 14px;
+    height: 14px;
+    display: block;
+    padding: 1px;
+}
+
+.spacer {
+    padding: 0 10px;
+}
+
+.ui-selectonemenu .ui-inputfield {
+    padding: 3px;
+}

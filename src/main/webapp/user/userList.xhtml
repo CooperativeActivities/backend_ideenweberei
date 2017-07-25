@@ -8,21 +8,47 @@
             <p:outputPanel class="row" id="itemList">
                 <div class="col-xs-12">
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
-                    <div class="form-group">
-                        <p:commandButton class="btn btn-primary"
-                                         value="Create"
-                                         icon="fa fa-pencil"
-                                         update="form:itemEditDialog"
-                                         oncomplete="PF('itemEditDialog').show()">
-                            <f:setPropertyActionListener value="#{userDetailController.create()}"
-                                                         target="#{userDetailController.user}"/>
-                        </p:commandButton>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <p:commandButton class="btn btn-primary"
+                                                 value="Create"
+                                                 icon="fa fa-pencil"
+                                                 update="form:itemEditDialog"
+                                                 oncomplete="PF('itemEditDialog').show()">
+                                    <f:setPropertyActionListener value="#{userDetailController.create()}"
+                                                                 target="#{userDetailController.user}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <p:commandButton class="btn btn-primary"
+                                                 value="Add"
+                                                 icon="fa fa-plus"
+                                                 action="#{groupDetailController.add(userListController.selectedUser)}"/>
+                            </div>
+                            <span class="spacer">to</span>
+                            <div class="input-group">
+                                <p:selectOneMenu id="itemCategory"
+                                                 value="#{groupDetailController.group}"
+                                                 filter="true" filterMatchMode="contains">
+                                    <f:converter binding="#{groupConverter}"/>
+                                    <f:selectItems value="#{groupListController.groupList}"
+                                                   var="group"
+                                                   itemLabel="#{group}"
+                                                   itemValue="#{group}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12">
                     <p:dataTable var="user" value="#{userListController.userList}"
                                  tableStyleClass="table table-striped"
-                                 styleClass="table-responsive" id="itemTable">
+                                 styleClass="table-responsive" id="itemTable"
+                                 selection="#{userListController.selectedUser}" rowKey="#{user}">
+                        <p:column selectionMode="multiple" style="width: 40px;"/>
                         <p:column headerText="Name" sortBy="#{user.name}" filterBy="#{user.name}"
                                   filterMatchMode="contains">
                             <h:outputText value="#{user.name}"/>

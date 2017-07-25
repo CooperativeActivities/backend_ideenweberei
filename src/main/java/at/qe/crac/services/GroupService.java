@@ -30,10 +30,24 @@ public class GroupService extends AbstractService<Group> {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    public Group getGroup(int id) {
+        JsonNode response = helperService.request("/group/"+id, "get");
+        ObjectMapper mapper = new ObjectMapper();
+        Group group = null;
+
+        try {
+            group = mapper.treeToValue(response.path("object"), Group.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return group;
+    }
+
     public List<Group> getGroupList() {
         JsonNode response = helperService.request("/group", "get");
+        System.out.println(response);
         ObjectMapper mapper = new ObjectMapper();
-
         List<Group> groups = new ArrayList<>();
 
         if(response == null) {
@@ -54,11 +68,36 @@ public class GroupService extends AbstractService<Group> {
         return groups;
     }
 
+    //PUT /group/{group_id}/add/multiple
+    public void add(Group group, List<User> userList) {
+
+        List<User> tmpList = new ArrayList<>();
+
+        for(User user : userList) {
+            User tmp = new User();
+            tmp.setId(user.getId());
+            tmp.setName(user.getName());
+            tmpList.add(tmp);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.convertValue(tmpList, JsonNode.class);
+
+        System.out.println(node);
+
+        JsonNode response = helperService.request("/group/"+group.id+"/add/multiple", "put", node);
+        if(response == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not add User."));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info:", "User added."));
+    }
+
     public Group createGroup() {
         Group group = new Group();
         group.setName("");
         group.setDescription("");
-        group.setMaxEnrols(1000);
+        group.setMaxEnrols(1024);
         return group;
     }
 
