@@ -105,16 +105,48 @@ textarea.ui-inputfield {
     transform: translate(0, 0)
 }
 
+.ui-icon-seek-first, .ui-icon-seek-prev, .ui-icon-seek-next, .ui-icon-seek-end {
+    color: transparent;
+}
+
+.ui-icon-seek-first:before {
+    color: #fff;
+    content: "\f100"
+}
+
+.ui-icon-seek-prev:before {
+    color: #fff;
+    content: "\f104"
+}
+
+.ui-icon-seek-next:before {
+    color: #fff;
+    content: "\f105"
+}
+
+.ui-icon-seek-end:before {
+    color: #fff;
+    content: "\f101"
+}
+
 .ui-icon-closethick:before, .ui-icon-close:before {
     content: "\f00d"
 }
 
-.ui-icon-triangle-1-s:before {
-    content: "\f078" !important
+.ui-icon-carat-2-n-s:before {
+    content: none;
 }
 
-.ui-icon-carat-2-n-s:before {
-    content: "\f077"
+.ui-icon-triangle-1-s:before {
+    content: "\f161" !important
+}
+
+.ui-icon-triangle-1-n:before {
+    content: "\f160" !important
+}
+
+.ui-selectonemenu-trigger .ui-icon-triangle-1-s:before {
+    content: "\f078" !important
 }
 
 .ui-dialog .ui-dialog-titlebar-close span {
@@ -360,4 +392,28 @@ label {
 
 .ui-selectonemenu .ui-inputfield {
     padding: 3px;
+}
+
+.ui-paginator.ui-paginator-top {
+    display: none;
+}
+
+.ui-paginator-page.ui-state-active, .ui-paginator-first, .ui-paginator-prev, .ui-paginator-next, .ui-paginator-last {
+    color: #fff;
+    background: #337ab7;
+    border-color: #2e6da4;
+}
+
+.ui-paginator-page:hover, .ui-paginator-page.ui-state-active:hover {
+    color: #fff;
+    background: #2e6da4;
+    border-color: #2e6da4;
+}
+
+.ui-paginator-first, .ui-paginator-prev, .ui-paginator-next, .ui-paginator-last {
+    padding: 2px 2px 2px 8px !important;
+}
+
+.ui-button-icon-left {
+    padding: 1px;
 }

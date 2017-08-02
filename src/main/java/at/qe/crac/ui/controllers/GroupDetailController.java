@@ -4,6 +4,7 @@ import at.qe.crac.model.Group;
 import at.qe.crac.model.User;
 import at.qe.crac.services.GroupService;
 import at.qe.crac.services.UserService;
+import at.qe.crac.ui.beans.SessionInfoBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -46,11 +47,11 @@ public class GroupDetailController {
 
     public void add(List<User> userList) {
         if(userList == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No User selected."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected or User already in Group."));
             return;
         }
         if(group == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No Group selected."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Group selected."));
             return;
         }
 
@@ -77,8 +78,16 @@ public class GroupDetailController {
     }
 
     public void delete() {
+        if(group.getEnroledUsers() != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Group ist not empty."));
+            return;
+        }
         groupService.deleteGroup(group);
         groupListController.setGroupList(null);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Group deleted."));
+    }
+
+    public void remove(List<User> userList) {
+        groupService.remove(group, userList);
     }
 }

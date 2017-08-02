@@ -91,9 +91,8 @@ public class RoleService extends AbstractService<Role> {
         if(newRoles != null) {
             for (Role role : newRoles) {
                 if (oldRoles == null || !oldRoles.contains(role)) {
-                    //PUT admin/user/{user_id}/role/{role_id}/add
+                    // PUT admin/user/{user_id}/role/{role_id}/add
                     //todo: check API
-                    System.out.println(role.id);
 
                     JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "put");
                     if (response == null) {
@@ -108,7 +107,6 @@ public class RoleService extends AbstractService<Role> {
                 if (newRoles == null || !newRoles.contains(role)) {
                     //DELETE admin/user/{user_id}/role/{role_id}/add
                     //todo: check API
-                    System.out.println(role.id);
 
                     JsonNode response = helperService.request("admin/user/" + user.id + "/role/" + role.id + "/add", "delete");
                     if (response == null) {

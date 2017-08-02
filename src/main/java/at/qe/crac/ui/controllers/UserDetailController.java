@@ -79,20 +79,20 @@ public class UserDetailController {
                 }
             }
         } else {
-            if(password1 != null || password2 != null) {
+            user.setPassword(null);
+            if(password1 != null && !password1.equals("") && password2 != null && !password2.equals("")) {
                 if(password1.equals(password2)) {
                     user.setPassword(password1);
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "Passwords do not match."));
-                    user.setPassword(null);
                 }
-            } else {
-                user.setPassword(null);
             }
         }
 
         this.user = userService.saveUser(user);
         userListController.setUserList(null);
+        this.password1 = null;
+        this.password2 = null;
     }
 
     public void save() {
@@ -100,8 +100,22 @@ public class UserDetailController {
     }
 
     public void delete() {
+        delete(user);
+    }
+
+    public void delete(User user) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User "+user.getName()+" deleted."));
         userService.deleteUser(user);
         userListController.setUserList(null);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User deleted."));
+    }
+
+    public void delete(List<User> userList) {
+        if(userList == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected."));
+            return;
+        }
+        for(User user : userList) {
+            delete(user);
+        }
     }
 }

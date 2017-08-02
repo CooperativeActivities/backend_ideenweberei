@@ -2,6 +2,7 @@ package at.qe.crac.services;
 
 import at.qe.crac.model.Group;
 import at.qe.crac.model.User;
+import at.qe.crac.ui.beans.SessionInfoBean;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,7 +47,6 @@ public class GroupService extends AbstractService<Group> {
 
     public List<Group> getGroupList() {
         JsonNode response = helperService.request("/group", "get");
-        System.out.println(response);
         ObjectMapper mapper = new ObjectMapper();
         List<Group> groups = new ArrayList<>();
 
@@ -68,6 +68,11 @@ public class GroupService extends AbstractService<Group> {
         return groups;
     }
 
+    public void remove(Group group, List<User> userList) {
+        //todo: everyting;
+        return;
+    }
+
     //PUT /group/{group_id}/add/multiple
     public void add(Group group, List<User> userList) {
 
@@ -83,9 +88,8 @@ public class GroupService extends AbstractService<Group> {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(tmpList, JsonNode.class);
 
-        System.out.println(node);
-
         JsonNode response = helperService.request("/group/"+group.id+"/add/multiple", "put", node);
+
         if(response == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not add User."));
             return;
@@ -102,8 +106,13 @@ public class GroupService extends AbstractService<Group> {
     }
 
     public Group saveGroup(Group group) {
+
         ObjectMapper mapper = new ObjectMapper();
+        List<User> userList = group.getEnroledUsers();
+        group.setEnroledUsers(null);
         JsonNode node = mapper.convertValue(group, JsonNode.class);
+
+        group.setEnroledUsers(userList);
 
         JsonNode response;
         if(group.isNew()) {

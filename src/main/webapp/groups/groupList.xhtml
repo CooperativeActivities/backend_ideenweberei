@@ -4,57 +4,62 @@
                 xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
     <ui:define name="content">
-        <h:form id="form">
-            <p:outputPanel class="row" id="itemList">
-                <div class="col-xs-12">
+        <p:outputPanel class="row" id="itemList">
+            <div class="col-xs-12">
+                <h:form id="form">
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
                     <div class="form-group">
                         <p:commandButton class="btn btn-primary"
+                                         id="itemCreate"
                                          value="Create"
                                          icon="fa fa-pencil"
-                                         update="form:itemEditDialog"
+                                         update="itemEditDialog"
                                          oncomplete="PF('itemEditDialog').show()">
                             <f:setPropertyActionListener value="#{groupDetailController.create()}"
                                                          target="#{groupDetailController.group}"/>
                         </p:commandButton>
                     </div>
-                </div>
-                <div class="col-xs-12">
                     <p:dataTable var="group" value="#{groupListController.groupList}"
                                  tableStyleClass="table table-striped"
-                                 styleClass="table-responsive" id="itemTable">
+                                 styleClass="table-responsive" id="itemTable"
+                                 paginator="true" rows="20">
                         <p:column headerText="Name" sortBy="#{group.name}" filterBy="#{group.name}"
                                   filterMatchMode="contains">
                             <h:outputText value="#{group.name}"/>
                         </p:column>
                         <p:column style="text-align: center">
                             <p:commandButton class="btn btn-primary"
+                                             id="itemEdit"
                                              value="Edit"
                                              icon="fa fa-pencil"
-                                             update="form:itemEditDialog"
+                                             update="itemEditDialog"
                                              oncomplete="PF('itemEditDialog').show()">
                                 <f:setPropertyActionListener value="#{group}"
                                                              target="#{groupDetailController.group}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
-                    <!-- ........................................................................................... -->
-                    <p:dialog header="Group"
-                              widgetVar="itemEditDialog" id="itemEditDialog" modal="true" showEffect="fade"
-                              hideEffect="fade" resizable="true">
-                        <p:outputPanel class="container" id="itemDetail"
-                                       rendered="#{not empty groupDetailController.group}">
-                            <div class="row">
-                                <div class="col-xs-12">
+                </h:form>
+                <!-- ........................................................................................... -->
+                <p:dialog header="Group"
+                          widgetVar="itemEditDialog" id="itemEditDialog" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="true">
+                    <p:outputPanel class="container" id="itemDetail"
+                                   rendered="#{not empty groupDetailController.group}">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h:form id="detail">
                                     <div class="panel panel-default ">
                                         <div class="panel-heading">
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemSave"
                                                              value="Save"
                                                              icon="fa fa-floppy-o"
-                                                             update="form:itemTable form:itemDetail"
+                                                             update="form:itemTable itemDetail"
                                                              action="#{groupDetailController.save()}">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemSaveClose"
                                                              value="Save and Close"
                                                              icon="fa fa-floppy-o"
                                                              update="form:itemTable"
@@ -62,6 +67,7 @@
                                                              oncomplete="PF('itemEditDialog').hide()">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemDelete"
                                                              value="Delete"
                                                              immediate="true"
                                                              icon="fa fa-trash-o"
@@ -71,8 +77,9 @@
                                                              rendered="#{not groupDetailController.group.isNew()}">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemClose"
                                                              value="Close"
-                                                             icon="fa fa-floppy-o"
+                                                             icon="fa fa-times-circle"
                                                              update="form:itemTable"
                                                              oncomplete="PF('itemEditDialog').hide()">
                                             </p:commandButton>
@@ -86,7 +93,8 @@
                                                     </div>
                                                     <p:inputText id="itemName" class="form-control"
                                                                  value="#{groupDetailController.group.name}"
-                                                                 required="true" requiredMessage="Name is missing."/>
+                                                                 required="true"
+                                                                 requiredMessage="Name is missing."/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -98,7 +106,8 @@
                                                     <p:inputText id="itemLimit" class="form-control"
                                                                  value="#{groupDetailController.group.maxEnrols}"
                                                                  size="6"
-                                                                 required="true" requiredMessage="Limit is missing.">
+                                                                 required="true"
+                                                                 requiredMessage="Limit is missing.">
                                                         <f:convertNumber integerOnly="true"/>
                                                     </p:inputText>
                                                 </div>
@@ -107,28 +116,46 @@
                                                 <h:outputLabel for="itemDesc" value="Beschreibung:"/>
                                                 <div class="input-group">
                                                     <p:inputText id="itemDesc" class="form-control"
-                                                                     value="#{groupDetailController.group.description}"
-                                                                     required="true" requiredMessage="Desc is missing."/>
+                                                                 value="#{groupDetailController.group.description}"
+                                                                 required="true"
+                                                                 requiredMessage="Desc is missing."/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="panel-body form-inline">
-                                            <p:dataTable var="user" value="#{groupDetailController.group.enroledUsers}"
-                                                         tableStyleClass="table table-striped"
-                                                         styleClass="table-responsive" id="userTable">
-                                                <p:column headerText="Name" sortBy="#{user.name}" filterBy="#{user.name}"
-                                                          filterMatchMode="contains">
-                                                    <h:outputText value="#{user.name}"/>
-                                                </p:column>
-                                            </p:dataTable>
+                                            <div class="panel panel-default ">
+                                                <div class="panel-heading">
+                                                    <p:commandButton class="btn btn-primary"
+                                                                     id="itemRemove"
+                                                                     value="Remove"
+                                                                     icon="fa fa-minus-circle"
+                                                                     update="userTable"
+                                                                     action="#{groupDetailController.remove(groupListController.selectedUser)}"/>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <p:dataTable var="user"
+                                                                 value="#{groupDetailController.group.enroledUsers}"
+                                                                 tableStyleClass="table table-striped"
+                                                                 styleClass="table-responsive" id="userTable"
+                                                                 selection="#{userListController.selectedUser}"
+                                                                 rowKey="#{user}">
+                                                        <p:column selectionMode="multiple" style="width: 40px;"/>
+                                                        <p:column headerText="Name" sortBy="#{user.name}"
+                                                                  filterBy="#{user.name}"
+                                                                  filterMatchMode="contains">
+                                                            <h:outputText value="#{user.name}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </h:form>
                             </div>
-                        </p:outputPanel>
-                    </p:dialog>
-                </div>
-            </p:outputPanel>
-        </h:form>
+                        </div>
+                    </p:outputPanel>
+                </p:dialog>
+            </div>
+        </p:outputPanel>
     </ui:define>
 </ui:composition>

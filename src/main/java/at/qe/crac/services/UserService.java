@@ -68,6 +68,9 @@ public class UserService extends AbstractService<User> {
     public List<User> getUserList() {
         JsonNode response = helperService.request("/user/all", "get");
         ObjectMapper mapper = new ObjectMapper();
+
+        System.out.println(response);
+
         List<User> user = new ArrayList<>();
 
         if(response == null) {
@@ -114,7 +117,11 @@ public class UserService extends AbstractService<User> {
     //POST /admin/user
     public User saveUser(User user) {
         List<Role> roleList = user.getRoles();
-        roleService.saveRoleList(user, roleList);
+
+        if(!user.equals(getUser())) {
+            roleService.saveRoleList(user, roleList);
+        }
+
         user.setRoles(null);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(user, JsonNode.class);
@@ -150,3 +157,4 @@ public class UserService extends AbstractService<User> {
         return user;
     }
 }
+

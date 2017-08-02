@@ -4,17 +4,18 @@
                 xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/WEB-INF/templates/main.xhtml">
     <ui:define name="content">
-        <h:form id="form">
-            <p:outputPanel class="row" id="itemList">
-                <div class="col-xs-12">
+        <p:outputPanel class="row" id="itemList">
+            <div class="col-xs-12">
+                <h:form id="form">
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
                     <div class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
                                 <p:commandButton class="btn btn-primary"
+                                                 id="itemCreate"
                                                  value="Create"
                                                  icon="fa fa-pencil"
-                                                 update="form:itemEditDialog"
+                                                 update="itemEditDialog"
                                                  oncomplete="PF('itemEditDialog').show()">
                                     <f:setPropertyActionListener value="#{userDetailController.create()}"
                                                                  target="#{userDetailController.user}"/>
@@ -24,8 +25,19 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <p:commandButton class="btn btn-primary"
+                                                 id="itemsDelete"
+                                                 value="Delete"
+                                                 icon="fa fa-trash-o"
+                                                 update="form:itemTable"
+                                                 action="#{userDetailController.delete(userListController.selectedUser)}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <p:commandButton class="btn btn-primary"
+                                                 id="itemsAdd"
                                                  value="Add"
-                                                 icon="fa fa-plus"
+                                                 icon="fa fa-plus-circle"
                                                  action="#{groupDetailController.add(userListController.selectedUser)}"/>
                             </div>
                             <span class="spacer">to</span>
@@ -42,12 +54,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xs-12">
                     <p:dataTable var="user" value="#{userListController.userList}"
                                  tableStyleClass="table table-striped"
                                  styleClass="table-responsive" id="itemTable"
-                                 selection="#{userListController.selectedUser}" rowKey="#{user}">
+                                 selection="#{userListController.selectedUser}" rowKey="#{user}"
+                                 paginator="true" rows="20">
                         <p:column selectionMode="multiple" style="width: 40px;"/>
                         <p:column headerText="Name" sortBy="#{user.name}" filterBy="#{user.name}"
                                   filterMatchMode="contains">
@@ -55,32 +66,37 @@
                         </p:column>
                         <p:column style="text-align: center">
                             <p:commandButton class="btn btn-primary"
+                                             id="itemEdit"
                                              value="Edit"
                                              icon="fa fa-pencil"
-                                             update="form:itemEditDialog"
+                                             update="itemEditDialog"
                                              oncomplete="PF('itemEditDialog').show()">
                                 <f:setPropertyActionListener value="#{user}"
                                                              target="#{userDetailController.user}"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
-                    <!-- ........................................................................................... -->
-                    <p:dialog header="User"
-                              widgetVar="itemEditDialog" id="itemEditDialog" modal="true" showEffect="fade"
-                              hideEffect="fade" resizable="true">
-                        <p:outputPanel class="container" id="itemDetail"
-                                       rendered="#{not empty userDetailController.user}">
-                            <div class="row">
-                                <div class="col-xs-12">
+                </h:form>
+                <!-- ........................................................................................... -->
+                <p:dialog header="User"
+                          widgetVar="itemEditDialog" id="itemEditDialog" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="true">
+                    <p:outputPanel class="container" id="itemDetail"
+                                   rendered="#{not empty userDetailController.user}">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h:form id="detail">
                                     <div class="panel panel-default ">
                                         <div class="panel-heading">
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemSave"
                                                              value="Save"
                                                              icon="fa fa-floppy-o"
-                                                             update="form:itemTable form:itemDetail"
+                                                             update="form:itemTable itemDetail"
                                                              action="#{userDetailController.save()}">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemSaveClose"
                                                              value="Save and Close"
                                                              icon="fa fa-floppy-o"
                                                              update="form:itemTable"
@@ -88,6 +104,7 @@
                                                              oncomplete="PF('itemEditDialog').hide()">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemDelete"
                                                              value="Delete"
                                                              immediate="true"
                                                              icon="fa fa-trash-o"
@@ -97,8 +114,9 @@
                                                              rendered="#{not userDetailController.user.isNew()}">
                                             </p:commandButton>
                                             <p:commandButton class="btn btn-primary"
+                                                             id="itemClose"
                                                              value="Close"
-                                                             icon="fa fa-floppy-o"
+                                                             icon="fa fa-times-circle"
                                                              update="form:itemTable"
                                                              oncomplete="PF('itemEditDialog').hide()">
                                             </p:commandButton>
@@ -159,7 +177,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <p:outputLabel value="Roles: #{userListController.roleList}" for="itemRoles"/>
+                                                    <p:outputLabel value="Roles: #{userListController.roleList}"
+                                                                   for="itemRoles"/>
                                                     <p:autoComplete id="itemRoles" multiple="true"
                                                                     value="#{userDetailController.user.roles}"
                                                                     completeMethod="#{userDetailController.completeRole}"
@@ -173,13 +192,35 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="panel-body form-inline">
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemPass1" value="Passwort:"/>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-key"/>
+                                                    </div>
+                                                    <p:inputText id="itemPass1" class="form-control" type="password"
+                                                                 value="#{userDetailController.password1}"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h:outputLabel for="itemPass2" value="Passwort:"/>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-key"/>
+                                                    </div>
+                                                    <p:inputText id="itemPass2" class="form-control" type="password"
+                                                                 value="#{userDetailController.password2}"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </h:form>
                             </div>
-                        </p:outputPanel>
-                    </p:dialog>
-                </div>
-            </p:outputPanel>
-        </h:form>
+                        </div>
+                    </p:outputPanel>
+                </p:dialog>
+            </div>
+        </p:outputPanel>
     </ui:define>
 </ui:composition>

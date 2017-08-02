@@ -21,6 +21,7 @@ public class GroupListController {
     private GroupService groupService;
 
     private List<Group> groupList;
+    private List<User> selectedUser;
 
     public List<Group> getGroupList() {
         if(groupList == null) {
@@ -31,5 +32,13 @@ public class GroupListController {
 
     public void setGroupList(List<Group> groupList) {
         this.groupList = groupList;
+    }
+
+    public List<User> getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(List<User> selectedUser) {
+        this.selectedUser = selectedUser;
     }
 }
