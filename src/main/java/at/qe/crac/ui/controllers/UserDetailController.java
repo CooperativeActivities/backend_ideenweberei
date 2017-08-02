@@ -110,7 +110,7 @@ public class UserDetailController {
     }
 
     public void delete(List<User> userList) {
-        if(userList == null) {
+        if(userList.size() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected."));
             return;
         }

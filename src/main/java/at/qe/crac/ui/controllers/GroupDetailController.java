@@ -46,8 +46,8 @@ public class GroupDetailController {
     }
 
     public void add(List<User> userList) {
-        if(userList == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected or User already in Group."));
+        if(userList.size() == 0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected."));
             return;
         }
         if(group == null) {
