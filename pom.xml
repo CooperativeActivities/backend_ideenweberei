@@ -33,6 +33,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+       	<config.tomcat.manager.url>http://localhost:8080/manager/text</config.tomcat.manager.url>
+		<config.tomcat.authentication.id>admin</config.tomcat.authentication.id>
+		<config.tomcat.context.path>/crac-ideenweberei</config.tomcat.context.path>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -202,6 +208,16 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${config.tomcat.manager.url}</url>
+					<server>${config.tomcat.authentication.id}</server>
+					<path>${config.tomcat.context.path}</path>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 </project>
