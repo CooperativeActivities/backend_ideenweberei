@@ -9,9 +9,8 @@
 
     <name>CrAc</name>
     <description>
-        
-    </description>
         CrAc description
+    </description>
     <repositories>
         <repository>
             <id>spring-releases</id>
