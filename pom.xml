@@ -172,7 +172,7 @@
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-util</artifactId>
+			<artifactId>tomcat-util-scan</artifactId>
 			<version>8.0.46</version>
 		</dependency>
 	</dependencies>
