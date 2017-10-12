@@ -2,7 +2,6 @@ package at.qe.crac.services;
 
 import at.qe.crac.model.Group;
 import at.qe.crac.model.User;
-import at.qe.crac.ui.beans.SessionInfoBean;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -3,8 +3,6 @@ package at.qe.crac.ui.controllers;
 import at.qe.crac.model.Group;
 import at.qe.crac.model.User;
 import at.qe.crac.services.GroupService;
-import at.qe.crac.services.UserService;
-import at.qe.crac.ui.beans.SessionInfoBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

@@ -63,20 +63,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- mysql - database -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.9</version>
-		</dependency>
-
-		<!-- mariadb jdbc driver -->
-		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
-			<version>1.5.7</version>
-		</dependency>
-
 		<!-- bootstrap theme -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>

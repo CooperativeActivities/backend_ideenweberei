@@ -1,14 +1,10 @@
 package at.qe.crac.services;
 
-import at.qe.crac.model.User;
-import at.qe.crac.ui.beans.SessionInfoBean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

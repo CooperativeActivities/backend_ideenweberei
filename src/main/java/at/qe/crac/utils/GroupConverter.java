@@ -1,9 +1,7 @@
 package at.qe.crac.utils;
 
 import at.qe.crac.model.Group;
-import at.qe.crac.model.Role;
 import at.qe.crac.services.GroupService;
-import at.qe.crac.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
