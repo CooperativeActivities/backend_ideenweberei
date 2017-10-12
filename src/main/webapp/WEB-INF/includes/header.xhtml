@@ -12,18 +12,18 @@
             <span class="icon-bar"/>
             <span class="icon-bar"/>
         </button>
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/welcome.xhtml">
-            <img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="Smiley face" />
+        <a class="navbar-brand" href="/welcome.xhtml">
+            <img src="/resources/images/logo.png" alt="Smiley face" />
             CrAc Backend
         </a>
     </div>
     <div class="navbar-collapse collapse">
         <ui:fragment rendered="#{sessionInfoBean.hasRole('ADMIN')}">
             <ul class="nav navbar-nav">
-                <li><h:outputLink value="${pageContext.request.contextPath}/user/userList.xhtml">
+                <li><h:outputLink value="/user/userList.xhtml">
                     User
                 </h:outputLink></li>
-                <li><h:outputLink value="${pageContext.request.contextPath}/groups/groupList.xhtml">
+                <li><h:outputLink value="/groups/groupList.xhtml">
                     Groups
                 </h:outputLink></li>
             </ul>
@@ -39,17 +39,17 @@
                         <span class="caret"/>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><h:outputLink value="${pageContext.request.contextPath}/profile.xhtml">
+                        <li><h:outputLink value="/profile.xhtml">
                             <span class="fa fa-user"/> Profil
                         </h:outputLink></li>
-                        <li><h:outputLink value="${pageContext.request.contextPath}/logout">
+                        <li><h:outputLink value="/logout">
                             <span class="fa fa-sign-out"/> Abmelden
                         </h:outputLink></li>
                     </ul>
                 </li>
             </ui:fragment>
             <ui:fragment rendered="#{!sessionInfoBean.loggedIn}">
-                <li><h:outputLink value="${pageContext.request.contextPath}/login.xhtml">
+                <li><h:outputLink value="/login.xhtml">
                     Anmelden <span class="fa fa-sign-in"/>
                 </h:outputLink></li>
             </ui:fragment>
