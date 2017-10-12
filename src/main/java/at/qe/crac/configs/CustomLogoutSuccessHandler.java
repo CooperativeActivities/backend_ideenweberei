@@ -24,6 +24,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
         response.setStatus(HttpServletResponse.SC_OK);
         //redirect to login
-        response.sendRedirect("/login.xhtml?logout=true");
+        response.sendRedirect("/crac-ideenweberei/login.xhtml?logout=true");
     }
 }
