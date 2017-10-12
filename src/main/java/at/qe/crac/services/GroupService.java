@@ -69,8 +69,19 @@ public class GroupService extends AbstractService<Group> {
     }
 
     public void remove(Group group, List<User> userList) {
-        //todo: everyting;
-        return;
+        for(User user : userList) {
+            remove(group, user);
+        }
+    }
+
+    //DELETE /group/{group_id}/remove/user/{user_id}
+    public void remove(Group group, User user) {
+        JsonNode response = helperService.request("/group/" + group.id + "/remove/user/" + user.id, "delete");
+        if (response == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Could not remove User " + user.getName() + "."));
+            return;
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info:", "User " + user.getName() + " removed."));
     }
 
     //PUT /group/{group_id}/add/multiple

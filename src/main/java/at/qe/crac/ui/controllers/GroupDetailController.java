@@ -46,7 +46,7 @@ public class GroupDetailController {
     }
 
     public void add(List<User> userList) {
-        if(userList.size() == 0) {
+        if(userList == null || userList.size() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected."));
             return;
         }
@@ -56,6 +56,20 @@ public class GroupDetailController {
         }
 
         groupService.add(group, userList);
+    }
+
+    public void remove(List<User> userList) {
+        if(userList == null || userList.size() == 0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No User selected."));
+            return;
+        }
+        if(group == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Group selected."));
+            return;
+        }
+
+        groupService.remove(group, userList);
+        group.getEnroledUsers().removeAll(userList);
     }
 
     public Group create() {
@@ -85,9 +99,5 @@ public class GroupDetailController {
         groupService.deleteGroup(group);
         groupListController.setGroupList(null);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Group deleted."));
-    }
-
-    public void remove(List<User> userList) {
-        groupService.remove(group, userList);
     }
 }

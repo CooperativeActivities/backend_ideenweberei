@@ -118,10 +118,6 @@ public class UserService extends AbstractService<User> {
     public User saveUser(User user) {
         List<Role> roleList = user.getRoles();
 
-        if(!user.equals(getUser())) {
-            roleService.saveRoleList(user, roleList);
-        }
-
         user.setRoles(null);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(user, JsonNode.class);
@@ -153,6 +149,10 @@ public class UserService extends AbstractService<User> {
         }
 
         user.setRoles(roleList);
+        if(!user.equals(getUser())) {
+            roleService.saveRoleList(user, roleList);
+        }
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "User saved."));
         return user;
     }

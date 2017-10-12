@@ -129,7 +129,7 @@
                                                                      id="itemRemove"
                                                                      value="Remove"
                                                                      icon="fa fa-minus-circle"
-                                                                     update="userTable"
+                                                                     update="form:itemTable itemDetail userTable"
                                                                      action="#{groupDetailController.remove(groupListController.selectedUser)}"/>
                                                 </div>
                                                 <div class="panel-body">
@@ -137,7 +137,7 @@
                                                                  value="#{groupDetailController.group.enroledUsers}"
                                                                  tableStyleClass="table table-striped"
                                                                  styleClass="table-responsive" id="userTable"
-                                                                 selection="#{userListController.selectedUser}"
+                                                                 selection="#{groupListController.selectedUser}"
                                                                  rowKey="#{user}">
                                                         <p:column selectionMode="multiple" style="width: 40px;"/>
                                                         <p:column headerText="Name" sortBy="#{user.name}"
